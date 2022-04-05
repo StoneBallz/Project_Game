@@ -10,6 +10,8 @@ public class GridManager : MonoBehaviour
 
    [SerializeField] private Transform _cam;
 
+   private Dictionary<Vector2,Tile> game_tiles;
+
     void Start() {
         Generate_Grid();
     }
@@ -21,8 +23,10 @@ public class GridManager : MonoBehaviour
                 var spawnedtile = Instantiate(_tileprefab,new Vector3(i,j), Quaternion.identity);
                 spawnedtile.name=$"Tile {i} {j}";
 
-                var isoffset=(i%2==0&&j%2!=0)||(i%2!=0&&j%2==0);
+                var isoffset=(i+j)%2==1;
                 spawnedtile.Init(isoffset);
+
+                game_tiles[new Vector2(i,j)]=spawnedtile;
             }
         }
 
